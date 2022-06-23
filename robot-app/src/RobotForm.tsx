@@ -1,10 +1,30 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
+import FactorySection from "./FactorySection";
+import Robot from "./Robot";
 
-class RobotForm extends Component<any, any> {
+interface RobotFormProps {
+  setRobot: (robot: Robot) => void;
+}
+
+class RobotForm extends Component<RobotFormProps, any> {
+  private onSubmit(event: FormEvent): void {
+    event.preventDefault();
+    const target: any = event.target;
+    const robot: Robot = new Robot(
+      target.name.value,
+      target.type.value,
+      target.color.value,
+      target.jump.checked,
+      target.blink.checked,
+      target.talk.checked
+    );
+    this.props.setRobot(robot);
+    target.reset();
+  }
   public render() {
     return (
       <section className="section-create-robot">
-        <form>
+        <form onSubmit={(e: FormEvent<HTMLFormElement>) => this.onSubmit(e)}>
           <div className="title">Create robot</div>
           <div className="option-box">
             <div className="input-name box">
@@ -18,8 +38,8 @@ class RobotForm extends Component<any, any> {
             </div>
             <div className="select-type box">
               <label>Select type *</label>
-              <select name="robot-type" id="robot-type">
-                <option selected></option>
+              <select name="type" id="robot-type">
+                <option defaultValue="selected"></option>
                 <option value="Male">Male Robot</option>
                 <option value="Female">Female Robot</option>
               </select>
@@ -28,23 +48,23 @@ class RobotForm extends Component<any, any> {
               <label>Select color *</label>
               <input
                 type="color"
-                name="robot-color"
+                name="color"
                 id="robot-color"
-                value="#e96126"
+                defaultValue="#e96126"
               />
             </div>
             <div className="select-options">
               <label>Select Options</label>
               <div className="option">
-                <input type="checkbox" name="checkbox" id="jump" />
+                <input type="checkbox" name="jump" id="jump" />
                 <label htmlFor="jump">can jump</label>
               </div>
               <div className="option">
-                <input type="checkbox" name="checkbox1" id="talk" />
+                <input type="checkbox" name="talk" id="talk" />
                 <label htmlFor="talk">can talk</label>
               </div>
               <div className="option">
-                <input type="checkbox" name="checkbox2" id="blink" />
+                <input type="checkbox" name="blink" id="blink" />
                 <label htmlFor="blink">can blink</label>
               </div>
             </div>

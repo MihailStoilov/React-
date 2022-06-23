@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import Robot from "./Robot";
+
+interface RobotsProps {
+  robots: Robot[];
+}
 
 class RobotSideComponent extends Component<any, any> {
   public render() {
@@ -22,7 +27,7 @@ class RobotSideComponent extends Component<any, any> {
             <div className="right-leg leg"></div>
           </div>
         </div>
-        <p className="robot-name">Robot Name</p>
+        <p className="robot-name">{Robot.name}</p>
       </div>
     );
   }
